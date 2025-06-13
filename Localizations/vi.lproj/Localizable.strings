@@ -1,4 +1,4 @@
-"Main" = "Trang Chính";
+"Main" = "Trang chủ";
 "RemoveAds" = "Xóa quảng cáo";
 "RemovePYMK" = "Xóa \"Những người có thể bạn quen biết\"";
 "RemoveReelsCarousel" = "Xóa thanh cuộn reels";
@@ -33,7 +33,7 @@
 "DonateMe" = "Glow hoàn toàn miễn phí. Nếu thích, bạn có thể mời tôi một ly cà phê để ủng hộ phát triển ứng dụng";
 "StoreDesc" = "Nhận chứng chỉ nhà phát triển và tận hưởng nhiều ứng dụng độc quyền";
 
-"DeveloperFooter" = "Được lập trình với ❤️";
+"DeveloperFooter" = "Được lập trình bằng ❤️";
 
 "DownloadVideo" = "Tải video";
 "DownloadStory" = "Tải story";
@@ -49,7 +49,7 @@
 "Welcome.Download" = "Tải phương tiện";
 "Welcome.DownloadDesc" = "Tải bất cứ gì bạn thích — video, hình ảnh, reels, thậm chí cả story.";
 "Welcome.Incognito" = "Chế độ ẩn danh";
-"Welcome.IncognitoDesc" = "Ẩn mình. Xem story và chỉ đánh dấu đã xem khi bạn muốn.";
+"Welcome.IncognitoDesc" = "Vô hình. Xem story và chỉ đánh dấu đã xem khi bạn muốn.";
 "Welcome.Confirmation" = "Xác nhận";
 "Welcome.ConfirmationDesc" = "Lo lắng về việc thích nhầm? Bây giờ bạn có thể yên tâm.";
 "Welcome.Settings" = "Đơn giản";
