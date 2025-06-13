@@ -1,0 +1,60 @@
+"Main" = "首頁";
+"RemoveAds" = "移除廣告";
+"RemovePYMK" = "移除 \"你可能認識的朋友\"";
+"RemoveReelsCarousel" = "移除 Reels 影片輪播";
+"PostLikeConfirm" = "對貼文按讚，會再次確認";
+"DownloadVideos" = "下載影片";
+"DownloadVideosDesc" = "長按即可從動態消息和限時動態下載影片";
+
+"Reels" = "Reels 影片";
+"DownloadReels" = "下載影片";
+"HideOverlay" = "新增一鍵隱藏按鈕";
+"ReelsLikeConfirm" = "對影片按讚，會再次確認";
+"ReelsLongTap" = "透過長按下載";
+"ReelsLongTapDesc" = "針對無下載按鈕的舊版本，長按即可下載";
+
+"Stories" = "限時動態";
+"DownloadStories" = "下載限時動態";
+"AnonymousStories" = "隱身瀏覽";
+"DisableAutoNext" = "停用自動播放下一則";
+"RemoveStoryPYMK" = "移除 \"你可能認識的朋友\"";
+
+"Cache" = "快取";
+"AutoClearCache" = "啟動時清除快取";
+"ClearCache" = "清除快取";
+
+"Developer" = "開發者";
+
+"DiscordDesc" = "加入獲得支援、提供回饋或聊天";
+"GithubDesc" = "Glow's 儲存庫";
+"DvntmsDesc" = "我的所有儲存庫集中在這裡";
+
+"FollowMe" = "在 X（Twitter）上跟隨 %@";
+"DonateMe" = "Glow 完全免費，隨手請我喝杯咖啡，支持開發吧！";
+"StoreDesc" = "取得開發者證書，享受多種獨家應用程式";
+
+"DeveloperFooter" = "用❤️編碼";
+
+"DownloadVideo" = "下載影片";
+"DownloadStory" = "下載限時動態";
+"Downloading" = "正在下載";
+"Cancel" = "取消";
+"SavedToPhotos" = "已儲存至照片App";
+"ImageNotFound" = "找不到圖片";
+"MarkAsSeen" = "標記為已觀看";
+"MarkedAsSeen" = "已標記為已觀看";
+"SomethingWentWrong" = "發生了一些問題";
+"GlowSettings" = "Glow 設定";
+
+"Welcome.Download" = "下載媒體";
+"Welcome.DownloadDesc" = "隨心下載 — 影片、圖片、連續短片，甚至是限時動態";
+"Welcome.Incognito" = "隱身模式";
+"Welcome.IncognitoDesc" = "保持隱身。由你決定何時標記為已觀看。";
+"Welcome.Confirmation" = "確認";
+"Welcome.ConfirmationDesc" = "怕不小心按到讚？現在您可以放心了";
+"Welcome.Settings" = "簡潔";
+"Welcome.SettingsDesc" = "靈活、直覺的設定 — 完全為你量身打造";
+"Welcome.More" = "更多功能";
+"Welcome.MoreDesc" = "Glow 遠非僅止於功能列表，更為你的隱私與舒適體驗解鎖更多工具";
+"Welcome.SettingsInfo" = "長按底部任一圖示標籤即可進入 Glow 設定";
+"Continue" = "繼續";
