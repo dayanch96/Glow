@@ -1,0 +1,60 @@
+“Main” = “主页”;
+“RemoveAds” = “移除广告”;
+“RemovePYMK” = “移除“可能认识的人””;
+“RemoveReelsCarousel” = “移除短视频轮播”;
+“PostLikeConfirm” = “点赞确认”;
+“DownloadVideos” = “下载视频”;
+“DownloadVideosDesc” = “长按从动态和故事中下载视频”;
+
+“Reels” = “短视频”;
+“DownloadReels” = “显示下载按钮”;
+“HideOverlay” = “显示清屏按钮”;
+“ReelsLikeConfirm” = “短视频点赞确认”;
+“ReelsLongTap” = “长按下载”;
+“ReelsLongTapDesc” = “适用于旧版本无下载按钮的备用方案”;
+
+“Stories” = “故事”;
+“DownloadStories” = “下载故事”;
+“AnonymousStories” = “匿名观看”;
+“DisableAutoNext” = “禁用自动切换”;
+“RemoveStoryPYMK” = “移除“可能认识的人””;
+
+“Cache” = “缓存”;
+“AutoClearCache” = “启动时清除缓存”;
+“ClearCache” = “清除缓存”;
+
+“Developer” = “开发者”;
+
+“DiscordDesc” = “加入以获取支持、反馈或闲聊”;
+“GithubDesc” = “Glow 的代码库”;
+“DvntmsDesc” = “我的所有项目汇总”;
+
+“FollowMe” = “在 Twitter 上关注 %@”;
+“DonateMe” = “Glow 完全免费，欢迎请我喝杯咖啡支持开发”;
+“StoreDesc” = “获取开发者证书，享受多种独家应用”;
+
+“DeveloperFooter” = “用心与热爱编写”;
+
+“DownloadVideo” = “下载视频”;
+“DownloadStory” = “下载故事”;
+“Downloading” = “正在下载”;
+“Cancel” = “取消”;
+“SavedToPhotos” = “已保存到照片”;
+“ImageNotFound” = “未找到图片”;
+“MarkAsSeen” = “标记为已看”;
+“MarkedAsSeen” = “已标记为已看”;
+“SomethingWentWrong” = “出现问题”;
+“GlowSettings” = “Glow 设置”;
+
+“Welcome.Download” = “下载媒体”;
+“Welcome.DownloadDesc” = “想下载什么都可以 — 视频、图片、Reels，甚至是故事。”;
+“Welcome.Incognito” = “隐身模式”;
+“Welcome.IncognitoDesc” = “保持隐身。只有在你想看的时候才标记为已看。”;
+“Welcome.Confirmation” = “操作确认”;
+“Welcome.ConfirmationDesc” = “担心误点点赞？现在你可以安心了。”;
+“Welcome.Settings” = “简洁易用”;
+“Welcome.SettingsDesc” = “灵活直观的设置 — 为你量身定制。”;
+“Welcome.More” = “更多功能”;
+“Welcome.MoreDesc” = “Glow 不止功能清单。它还解锁更多舒适与隐私工具。”;
+“Welcome.SettingsInfo” = “长按任意标签页即可进入 Glow 设置”;
+“Continue” = “继续”;
