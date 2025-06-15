@@ -1,0 +1,60 @@
+"Main" = "Trang chủ";
+"RemoveAds" = "Xóa quảng cáo";
+"RemovePYMK" = "Xóa \"Những người có thể bạn quen biết\"";
+"RemoveReelsCarousel" = "Xóa thanh cuộn reels";
+"PostLikeConfirm" = "Xác nhận thích bài viết";
+"DownloadVideos" = "Tải video";
+"DownloadVideosDesc" = "Nhấn giữ để tải video từ bảng tin và story";
+
+"Reels" = "Reels";
+"DownloadReels" = "Tải reels";
+"HideOverlay" = "Ẩn lớp phủ";
+"ReelsLikeConfirm" = "Xác nhận thích reels";
+"ReelsLongTap" = "Tải xuống bằng nhấn giữ";
+"ReelsLongTapDesc" = "Dùng cho phiên bản cũ không có nút tải về";
+
+"Stories" = "Stories";
+"DownloadStories" = "Tải stories";
+"AnonymousStories" = "Xem ẩn danh";
+"DisableAutoNext" = "Tắt tự động chuyển tiếp";
+"RemoveStoryPYMK" = "Xóa \"Những người có thể bạn quen biết\" trong story";
+
+"Cache" = "Bộ nhớ đệm";
+"AutoClearCache" = "Xóa bộ nhớ đệm khi khởi động";
+"ClearCache" = "Xóa bộ nhớ đệm";
+
+"Developer" = "Nhà phát triển";
+
+"DiscordDesc" = "Tham gia để nhận hỗ trợ, góp ý hoặc trò chuyện";
+"GithubDesc" = "Kho lưu trữ của Glow";
+"DvntmsDesc" = "Tất cả kho lưu trữ của tôi ở một nơi";
+
+"FollowMe" = "Theo dõi %@ trên Twitter";
+"DonateMe" = "Glow hoàn toàn miễn phí. Nếu thích, bạn có thể mời tôi một ly cà phê để ủng hộ phát triển ứng dụng";
+"StoreDesc" = "Nhận chứng chỉ nhà phát triển và tận hưởng nhiều ứng dụng độc quyền";
+
+"DeveloperFooter" = "Được lập trình bằng ❤️";
+
+"DownloadVideo" = "Tải video";
+"DownloadStory" = "Tải story";
+"Downloading" = "Đang tải về";
+"Cancel" = "Hủy";
+"SavedToPhotos" = "Đã lưu vào Ảnh";
+"ImageNotFound" = "Không tìm thấy hình ảnh";
+"MarkAsSeen" = "Đánh dấu đã xem";
+"MarkedAsSeen" = "Đã đánh dấu đã xem";
+"SomethingWentWrong" = "Đã xảy ra lỗi";
+"GlowSettings" = "Cài đặt Glow";
+
+"Welcome.Download" = "Tải phương tiện";
+"Welcome.DownloadDesc" = "Tải bất cứ gì bạn thích — video, hình ảnh, reels, thậm chí cả story.";
+"Welcome.Incognito" = "Chế độ ẩn danh";
+"Welcome.IncognitoDesc" = "Vô hình. Xem story và chỉ đánh dấu đã xem khi bạn muốn.";
+"Welcome.Confirmation" = "Xác nhận";
+"Welcome.ConfirmationDesc" = "Lo lắng về việc thích nhầm? Bây giờ bạn có thể yên tâm.";
+"Welcome.Settings" = "Đơn giản";
+"Welcome.SettingsDesc" = "Cài đặt linh hoạt, trực quan — tất cả dành riêng cho bạn.";
+"Welcome.More" = "Và nhiều hơn nữa";
+"Welcome.MoreDesc" = "Glow không chỉ là danh sách tính năng. Nó còn mở khóa thêm nhiều công cụ tiện lợi và riêng tư.";
+"Welcome.SettingsInfo" = "Cài đặt Glow có thể truy cập bằng cách nhấn giữ bất kỳ tab nào";
+"Continue" = "Tiếp tục";
