@@ -53,3 +53,27 @@ Review by [@qbap](https://github.com/qbap) on ONE Jailbreak: https://onejailbrea
   <li>Make sure all inputs are correct, then click <strong>Run workflow</strong> to start the process.</li>
   <li>Wait for the build to finish. You can download <strong>Glow for Facebook</strong> app from the releases section of your forked repo. (If you can't find the releases section, go to your forked repo and add /releases to the URL, i.e., github.com/user/Glow/releases.)</li>
 </ol>
+
+## Build options
+The workflow exposes a few inputs beyond the IPA link:
+
+| Input | Default | What it does |
+|---|---|---|
+| `ipa_url` | - | Direct download link to the decrypted IPA |
+| `display_name` | `Facebook` | Name shown on the home screen |
+| `bundle_id` | `com.facebook.Facebook` | Bundle identifier of the built app |
+| `liquid_glass` | enabled | Removes Facebook's `UIDesignRequiresCompatibility` opt out so the app and its extensions render with the Liquid Glass design |
+| `keep_extensions` | enabled | Keeps the app extensions that can be re-signed, and removes only the ones that are still encrypted |
+
+> [!NOTE]
+> `liquid_glass` only has an effect when the IPA you supply was built against the iOS 26 SDK or newer, because iOS keeps the legacy appearance for apps linked against older SDKs. The build logs say which SDK your IPA was built with, and warn you when the option could not be applied.
+
+> [!NOTE]
+> `keep_extensions` exists because Facebook renders its push payloads in a notification service extension. Removing every extension leaves iOS with the generic "You have a new notification" text instead of the real notification. Keep it enabled unless an extension prevents your signer from installing the app.
+
+The release notes of each build list the Glow version, the Facebook version taken from the IPA, and whether Liquid Glass was applied.
+
+## Notes on sideloading
+<li>App extensions need a signing method that supports them. Free developer certificates limit App Groups, so some extension backed features stay degraded no matter how the IPA is built</li>
+<li>Voice and video calls rely on entitlements that cannot be re-signed with a personal certificate, so they may fail on a sideloaded build and work on the App Store build</li>
+<li>Keeping the stock bundle identifier makes the built app handle the `fb://` links that other Meta apps open. Change `bundle_id` if you would rather leave those links to the App Store Facebook app</li>

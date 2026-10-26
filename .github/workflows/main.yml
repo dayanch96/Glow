@@ -22,9 +22,24 @@ on:
         required: true
         type: string
 
+      liquid_glass:
+        description: "Force Liquid Glass (needs an IPA built with the iOS 26 SDK or newer)"
+        default: true
+        required: false
+        type: boolean
+
+      keep_extensions:
+        description: "Keep app extensions (needed for detailed push notifications)"
+        default: true
+        required: false
+        type: boolean
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  CYAN_VERSION: "v1.4.4"
 
 jobs:
   build:
@@ -35,24 +50,31 @@ jobs:
 
     steps:
       - name: Checkout Main
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v7.0.1
         with:
           path: main
           submodules: recursive
 
       - name: Hide sensitive inputs
-        uses: levibostian/action-hide-sensitive-inputs@v1
+        uses: levibostian/action-hide-sensitive-inputs@1.2.1
         with:
-          exclude_inputs: display_name,bundle_id
+          exclude_inputs: display_name,bundle_id,liquid_glass,keep_extensions
 
       - name: Download and validate IPA
+        env:
+          IPA_URL: ${{ inputs.ipa_url }}
         run: |
-          wget "${{ inputs.ipa_url }}" --no-verbose -O ${{ github.workspace }}/facebook.ipa
+          wget "$IPA_URL" --no-verbose -O "$GITHUB_WORKSPACE/facebook.ipa"
 
-          file_type=$(file --mime-type -b ${{ github.workspace }}/facebook.ipa)
+          file_type=$(file --mime-type -b "$GITHUB_WORKSPACE/facebook.ipa")
 
           if [[ "$file_type" != "application/x-ios-app" && "$file_type" != "application/zip" ]]; then
             echo "::error::Validation failed: The downloaded file is not a valid IPA. Detected type: $file_type."
+            exit 1
+          fi
+
+          if ! unzip -Z1 "$GITHUB_WORKSPACE/facebook.ipa" | grep -qE "^Payload/[^/]+\.app/"; then
+            echo "::error::Validation failed: the archive has no Payload/*.app bundle. Make sure the link is a direct download to a decrypted IPA, not a web page."
             exit 1
           fi
 
@@ -63,7 +85,7 @@ jobs:
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH
 
       - name: Install cyan
-        run: pipx install --force https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip
+        run: pipx install --force "https://github.com/asdfzxcvbn/pyzule-rw/archive/refs/tags/${CYAN_VERSION}.zip"
 
       - name: Download Glow for Facebook
         id: download_glow
@@ -77,35 +99,98 @@ jobs:
 
           response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "$api_url")
           tag_name=$(echo "$response" | jq -r '.tag_name')
-          deb_url=$(echo "$response" | jq -r '.assets[0].browser_download_url')
+          deb_url=$(echo "$response" | jq -r '[.assets[] | select(.name | endswith(".deb")) | .browser_download_url] | first // empty')
 
-          if [[ "$deb_url" == "null" || -z "$deb_url" ]]; then
+          if [[ -z "$deb_url" ]]; then
             echo "::error::Failed to get tweak URL from Github API"
             exit 1
           fi
 
           echo "GLOW_TAG=$tag_name" >> $GITHUB_ENV
+          echo "IPA_NAME=Glow_FB_${tag_name}.ipa" >> $GITHUB_ENV
           echo "Downloading: $deb_url"
-          wget "$deb_url" --no-verbose -O ${{ github.workspace }}/glow_fb.deb
+          wget "$deb_url" --no-verbose -O "$GITHUB_WORKSPACE/glow_fb.deb"
 
       - name: Inject tweaks into IPA
-        run: cyan -i facebook.ipa -o Glow_FB_${{ env.GLOW_TAG }}.ipa -uwef glow_fb.deb -n "${{ inputs.display_name }}" -b ${{ inputs.bundle_id }} -s
-
-      - name: Strip embedded Swift dylibs
+        env:
+          DISPLAY_NAME: ${{ inputs.display_name }}
+          BUNDLE_ID: ${{ inputs.bundle_id }}
+          KEEP_EXTENSIONS: ${{ inputs.keep_extensions }}
         run: |
-          unzip -q Glow_FB_${{ env.GLOW_TAG }}.ipa -d tmp_payload
-          find tmp_payload/Payload/*.app/ -name "libswift*.dylib" -print -delete
-          cd tmp_payload
-          zip -qr ../Glow_FB_${{ env.GLOW_TAG }}_clean.ipa Payload
-          cd ..
-          mv Glow_FB_${{ env.GLOW_TAG }}_clean.ipa Glow_FB_${{ env.GLOW_TAG }}.ipa
+          # Facebook renders its own push payloads in a notification service
+          # extension, so dropping every extension leaves iOS with the generic
+          # "You have a new notification" fallback. Keep the extensions that can
+          # actually be re-signed and only drop the still encrypted ones.
+          if [[ "$KEEP_EXTENSIONS" == "true" ]]; then
+            ext_flag="--remove-encrypted"
+          else
+            ext_flag="--remove-extensions"
+          fi
 
-      - uses: softprops/action-gh-release@v2.0.1
+          cyan -i facebook.ipa -o "$IPA_NAME" -uwf glow_fb.deb -n "$DISPLAY_NAME" -b "$BUNDLE_ID" -s "$ext_flag"
+
+      - name: Patch IPA payload
+        env:
+          LIQUID_GLASS: ${{ inputs.liquid_glass }}
+        run: |
+          unzip -q "$IPA_NAME" -d tmp_payload
+          app_dir=$(echo tmp_payload/Payload/*.app)
+
+          fb_version=$(plutil -extract CFBundleShortVersionString raw -o - "$app_dir/Info.plist" 2>/dev/null || echo "unknown")
+          sdk_version=$(plutil -extract DTPlatformVersion raw -o - "$app_dir/Info.plist" 2>/dev/null || echo "")
+          echo "FB_VERSION=$fb_version" >> $GITHUB_ENV
+          echo "::notice::Facebook $fb_version, built against the iOS ${sdk_version:-unknown} SDK"
+
+          # Swift runtime ships in the dyld shared cache on every supported iOS
+          # version, and the bundled copies break the re-signed app.
+          find "$app_dir" -name "libswift*.dylib" -print -delete
+
+          # Info.plist of the app plus every extension that survived injection.
+          plists=("$app_dir/Info.plist")
+          while IFS= read -r appex; do
+            [[ -f "$appex/Info.plist" ]] && plists+=("$appex/Info.plist")
+          done < <(find "$app_dir" -type d -name "*.appex")
+
+          glass_state="off"
+
+          if [[ "$LIQUID_GLASS" == "true" ]]; then
+            if [[ "${sdk_version%%.*}" =~ ^[0-9]+$ ]] && (( ${sdk_version%%.*} >= 26 )); then
+              # UIDesignRequiresCompatibility is Facebook's opt out of the
+              # Liquid Glass redesign. Removing it hands the whole app, and its
+              # extensions, over to the current system design.
+              for plist in "${plists[@]}"; do
+                if plutil -remove UIDesignRequiresCompatibility "$plist" 2>/dev/null; then
+                  echo "Removed the Liquid Glass opt out from ${plist#tmp_payload/}"
+                fi
+              done
+              glass_state="on"
+              echo "::notice::Liquid Glass enabled."
+            else
+              echo "::warning::Liquid Glass was requested but this IPA is built against the iOS ${sdk_version:-unknown} SDK. iOS only applies the new design to apps built with the iOS 26 SDK or newer, so this build keeps the legacy look. Use a more recent decrypted IPA."
+            fi
+          fi
+
+          echo "LIQUID_GLASS_STATE=$glass_state" >> $GITHUB_ENV
+
+          rm -f "$IPA_NAME"
+          cd tmp_payload
+          zip -qr "../$IPA_NAME" Payload
+
+      - uses: softprops/action-gh-release@v3.0.3
         with:
           tag_name: glow-fb-${{ env.GLOW_TAG }}
           name: Glow_FB ${{ env.GLOW_TAG }}
-          files: Glow_FB_${{ env.GLOW_TAG }}.ipa
+          files: ${{ env.IPA_NAME }}
           draft: true
+          body: |
+            | | |
+            |---|---|
+            | Glow | ${{ env.GLOW_TAG }} |
+            | Facebook | ${{ env.FB_VERSION }} |
+            | App name | ${{ inputs.display_name }} |
+            | Bundle ID | ${{ inputs.bundle_id }} |
+            | Liquid Glass | ${{ env.LIQUID_GLASS_STATE }} |
+            | App extensions | ${{ inputs.keep_extensions && 'kept' || 'removed' }} |
 
       - name: Output Release URL
         run: |
