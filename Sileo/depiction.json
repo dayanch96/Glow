@@ -78,6 +78,18 @@
         {
             "views": [
                 {
+                    "text": "October 26, 2026",
+                    "class": "DepictionTableTextView",
+                    "title": "Version 1.4.0"
+                },
+                {
+                    "markdown": "- Builds made with GitHub Actions now run with the Liquid Glass design on iOS 26 and newer\n- Fixed generic \"You have a new notification\" push notifications in GitHub Actions builds\n- Builds now keep the app extensions that can be re-signed and drop only the encrypted ones\n- Release notes now list the Glow and Facebook versions of each build\n- Updated the build toolchain and pinned its versions",
+                    "class": "DepictionMarkdownView"
+                },
+                {
+                    "class": "DepictionSeparatorView"
+                },
+                {
                     "text": "June 25, 2025",
                     "class": "DepictionTableTextView",
                     "title": "Version 1.3.1"
